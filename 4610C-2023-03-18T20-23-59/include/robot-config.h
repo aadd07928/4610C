@@ -14,6 +14,7 @@ extern inertial Inert;
 extern rotation rot1;
 extern rotation rot2;
 extern motor intake;
+extern controller Controller1;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

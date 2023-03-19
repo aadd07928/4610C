@@ -19,10 +19,11 @@ inertial Inert = inertial(PORT5);
 rotation rot1 = rotation(PORT2, true);
 rotation rot2 = rotation(PORT9, false);
 motor intake = motor(PORT20, ratio6_1, true);
+controller Controller1 = controller(primary);
 
 // VEXcode generated functions
-
-
+// define variable for remote controller enable/disable
+bool RemoteControlCodeEnabled = true;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
