@@ -11,6 +11,7 @@ extern motor r2;
 extern motor r3;
 extern inertial Inert;
 extern controller Controller1;
+extern motor fly;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

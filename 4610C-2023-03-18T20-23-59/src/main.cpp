@@ -10,14 +10,15 @@
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
-// l1                   motor         8               
-// l2                   motor         4               
-// l3                   motor         9               
-// r1                   motor         7               
-// r2                   motor         6               
-// r3                   motor         5               
-// Inert                inertial      14              
+// l1                   motor         11              
+// l2                   motor         13              
+// l3                   motor         14              
+// r1                   motor         20              
+// r2                   motor         18              
+// r3                   motor         19              
+// Inert                inertial      21              
 // Controller1          controller                    
+// fly                  motor         17              
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
@@ -122,15 +123,39 @@ void pid(int dist,int head) {
 }
 
 
+int driver2() {
+
+  while (true) {
+    int error = 70-fly.velocity(rpm);
+
+    fly.spin(forward,(70+error*.2)/8.5,volt);
+
+    Controller1.Screen.clearScreen();
+    Controller1.Screen.setCursor(1, 1);
+    Controller1.Screen.print(fly.velocity(rpm));
+  }
+
+}
+
+void driver() {
+  while (true) {
+    int adder=0;
+    l1.resetPosition();l2.resetPosition();l3.resetPosition();r1.resetPosition();r2.resetPosition();r3.resetPosition();
+    if (Controller1.Axis3.position()) {
+      if (abs(Controller1.Axis1.position())<10) {
+        adder = (l1.position(degrees)+l2.position(degrees)+l3.position(degrees))/3-(r1.position(degrees)+r2.position(degrees)+r3.position(degrees))/3;
+      }
+    }
+
+    sl(Controller1.Axis3.position()+Controller1.Axis1.position());
+    sr(Controller1.Axis3.position()-Controller1.Axis1.position());
+  }
+}
+competition comp;
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-  Inert.calibrate();
-  wait(3, seconds);
   
-  
-  turn(-30);
-  wait(1,sec);
-  turn(180);
-  
+  comp.drivercontrol(driver);
+
 }
